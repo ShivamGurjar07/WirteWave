@@ -4,13 +4,33 @@
 body{
   color: #222;
 }
+.image{
+   display: flex;
+  justify-content: center;
+  align-items: center;
+}
 img{
   max-width: 100%;
+ 
 }
 main{
+  padding: 25px;
+  max-width: 100%;
+  margin: 10px auto;
+  background-color: #83c7ee;
+  border-radius: 10px;
+}
+.mainPage{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 20px;
+}
+
+.post{
   padding: 10px;
-  max-width: 700px;
-  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 header{
   display: flex;
@@ -31,7 +51,6 @@ header nav{
   display: flex;
   gap:15px;
 }
-
 div.post{
   display: grid;
   grid-template-columns: .9fr 1.1fr;
@@ -41,6 +60,10 @@ div.post{
 div.post div.texts h2{
  margin: 0px;
  font-size: 1.8rem;
+}
+div.post div.texts a{
+ text-decoration: none;
+ color: inherit;
 }
 
 div.post p.info{
@@ -60,8 +83,7 @@ div.post p.summary{
 }
 form.login, form.register{
   max-width: 400px;
-  margin: 0 auto;
-  
+  margin: 0 auto;  
 }
 input{
   display: block;
@@ -86,3 +108,4 @@ button{
 button:hover{
   background-color: #6e93f7;
 }
+
