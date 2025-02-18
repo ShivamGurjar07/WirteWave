@@ -1,74 +1,3 @@
-// const express = require("express");
-// const cors = require("cors");
-// const bcrypt = require("bcrypt");
-// const { default: mongoose } = require("mongoose");
-// const app = express();
-// const cookieParser = require("cookie-parser");
-// const User = require("./models/user");
-// const jwt = require("jsonwebtoken");
-
-// const salt = bcrypt.genSaltSync(10);
-// const secret = "sadsdncdndvndkl579";
-
-// app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
-// app.use(express.json());
-// app.use(cookieParser()); 
-
-// mongoose.connect(
-//   "mongodb+srv://wirteWave:go7DYB7lXDh9K4bU@cluster0.xct6t.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-// );
-
-// app.post("/register", async (req, res) => {
-//   const { username, password } = req.body;
-//   try {
-//     const userDoc = await User.create({
-//       username,
-//       password: bcrypt.hashSync(password, salt),
-//     });
-//     res.json(userDoc);
-//   } catch (e) {
-//     res.status(400).json(e);
-//   }
-// });
-
-// app.post("/login", async (req, res) => {
-//   const { username, password } = req.body;
-//   const userDoc = await User.findOne({ username });
-//   if (!userDoc) {
-//     return res.status(400).json("User not found");
-//   }
-
-//   const passOk = bcrypt.compareSync(password, userDoc.password);
-//   if (!passOk) {
-//     return res.status(400).json("Wrong credentials");
-//   }
-
-//   jwt.sign({ username, id: userDoc._id }, secret, {}, (err, token) => {
-//     if (err) {
-//       return res.status(500).json("Error generating token");
-//     }
-//     res
-//       .cookie("token", token, { httpOnly: true, secure: false }) 
-//       .json({ message: "Login successful", token });
-//   });
-// });
-
-// app.get("/profile", (req, res)=>{
-//   const {token} =req.cookies;
-//   jwt.verify(token, secret, {}, (err, info)=>{
-//     if (err) throw err;
-//     res.json(info)    
-//   })
-  
-// })
-
-// app.post("/logout",(req, res)=>{
-//   res.cookie("token", "").json("ok")
-// })
-
-// app.listen(8080);
-
-
 const express = require("express");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
@@ -76,14 +5,14 @@ const { default: mongoose } = require("mongoose");
 const app = express();
 const cookieParser = require("cookie-parser");
 const User = require("./models/user");
-const Post= require("./models/post");
+const Post = require("./models/post");
 const jwt = require("jsonwebtoken");
-const multer = require('multer');
-const uploadMiddleWare = multer({dest:'uploads/'})
+const multer = require("multer");
+const uploadMiddleWare = multer({ dest: "uploads/" });
 const salt = bcrypt.genSaltSync(10);
 const secret = "sadsdncdndvndkl579";
 const fs = require("fs");
-const path = require("path")
+const path = require("path");
 
 app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
 app.use(express.json());
@@ -129,39 +58,25 @@ app.post("/login", async (req, res) => {
         return res.status(500).json({ error: "Error generating token" });
       }
 
-      res.cookie("token", token, { httpOnly: true, secure: false, sameSite: "lax" }).json({
-        id: userDoc._id,
-        username,
-      });
+      res
+        .cookie("token", token, {
+          httpOnly: true,
+          secure: false,
+          sameSite: "lax",
+        })
+        .json({
+          id: userDoc._id,
+          username,
+        });
     });
   } catch (err) {
     res.status(500).json({ error: "Server error" });
   }
 });
 
-
-  // jwt.sign({ username, id: userDoc._id }, secret, {}, (err, token) => {
-  //   if (err) {
-  //     return res.status(500).json({ error: "Error generating token" });
-  //   }
-  //      res.cookie("token", token).json({
-  //       id:userDoc._id,
-  //       username,
-  //      });
-  //   })
-  // } else {
-  //   res.status(400).json("wrong credentials");
-  // }
-
-
-    // res
-    //   .cookie("token", token, { httpOnly: true, secure: false, sameSite: "lax" })
-    //   .json({ message: "Login successful", token });
-
-// Get Profile
 app.get("/profile", (req, res) => {
   const token = req.cookies?.token;
-  
+
   if (!token) {
     return res.status(401).json({ error: "Not authenticated" });
   }
@@ -176,37 +91,23 @@ app.get("/profile", (req, res) => {
 
 // Logout
 app.post("/logout", (req, res) => {
-  res.cookie("token", "", { httpOnly: true, secure: false, sameSite: "lax" }).json({ message: "Logged out" });
+  res
+    .cookie("token", "", { httpOnly: true, secure: false, sameSite: "lax" })
+    .json({ message: "Logged out" });
 });
-
-// app.post("/post",uploadMiddleWare.single("file"), async(req, res)=>{
-//   const {originalname, path} = req.file;
-//   const parts = originalname.split(".");
-//   const ext = parts[parts.length-1];
-//   fs.renameSync(path, path+"."+ext)
-//   const {title, summary, content} = req.body; 
-//   const postDoc=  await Post.create({
-//     title,
-//     summary, 
-//     content, 
-//     cover:newPath,
-//   });
-
-//   res.json({postDoc})
-// })
 
 app.post("/post", uploadMiddleWare.single("file"), async (req, res) => {
   try {
     const { originalname, path: tempPath } = req.file;
-    const ext = path.extname(originalname); 
-    const newPath = `${tempPath}${ext}`; 
-    
-    fs.renameSync(tempPath, newPath); 
-    
+    const ext = path.extname(originalname);
+    const newPath = `${tempPath}${ext}`;
+
+    fs.renameSync(tempPath, newPath);
+
     const { title, summary, content } = req.body;
     const token = req.cookies?.token;
 
-    jwt.verify(token, secret, {}, async(err, info) => {
+    jwt.verify(token, secret, {}, async (err, info) => {
       if (err) {
         return res.status(403).json({ error: "Invalid token" });
       }
@@ -215,23 +116,72 @@ app.post("/post", uploadMiddleWare.single("file"), async (req, res) => {
         summary,
         content,
         cover: newPath,
-        author:info.id,
+        author: info.id,
       });
-  
+
       res.json({ postDoc });
     });
-
-    
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Error creating post" });
   }
 });
 
+app.put("/post", uploadMiddleWare.single("file"), async (req, res) => {
+  let newPath = null;
+
+  if (req.file) {
+    const { originalname, path: tempPath } = req.file;
+    const ext = path.extname(originalname);
+    newPath = `${tempPath}${ext}`;
+    fs.renameSync(tempPath, newPath);
+  }
+
+  const token = req.cookies?.token;
+
+  jwt.verify(token, secret, {}, async (err, info) => {
+    if (err) {
+      return res.status(403).json({ error: "Invalid token" });
+    }
+
+    const { id, title, summary, content } = req.body;
+
+    if (!id) {
+      return res.status(400).json({ error: "Post ID is required" });
+    }
+
+    try {
+      const postDoc = await Post.findById(id);
+      if (!postDoc) {
+        return res.status(404).json({ error: "Post not found" });
+      }
+
+      const isAuthor =
+        JSON.stringify(postDoc.author) === JSON.stringify(info.id);
+      if (!isAuthor) {
+        return res.status(403).json({ error: "You are not the author" });
+      }
+
+      postDoc.set({
+        title,
+        summary,
+        content,
+        cover: newPath || postDoc.cover,
+      });
+
+      await postDoc.save();
+      res.json(postDoc);
+    } catch (error) {
+      console.error("Error updating post:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+});
+
 app.get("/post", async (req, res) => {
   try {
     const posts = await Post.find()
-       .populate("author", ["username"])
+      .populate("author", ["username"])
       .sort({ createdAt: -1 })
       .limit(20);
     res.json(posts);
@@ -241,16 +191,15 @@ app.get("/post", async (req, res) => {
   }
 });
 
-app.get("/post/:id",async(req,res)=>{
-  const {id} = req.params;
-  const postDoc= await Post.findById(id).populate("author",["username"]);
+app.get("/post/:id", async (req, res) => {
+  const { id } = req.params;
+  const postDoc = await Post.findById(id).populate("author", ["username"]);
   res.json(postDoc);
-})
+});
 
 app.listen(8080, () => {
   console.log("Server running on http://localhost:8080");
 });
-
 
 // go7DYB7lXDh9K4bU
 // mongodb+srv://wirteWave:go7DYB7lXDh9K4bU@cluster0.xct6t.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
