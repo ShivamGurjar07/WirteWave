@@ -76,7 +76,7 @@ export default function EditPost() {
   const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/post/${id}`)
+    fetch(`https://wirtewave.onrender.com/post/${id}`)
       .then((res) => res.json())
       .then((postInfo) => {
         if (postInfo) {
@@ -100,10 +100,10 @@ export default function EditPost() {
       data.append("file", files[0]);
     }
 
-    const res = await fetch("http://localhost:8080/post", {
+    const res = await fetch("https://wirtewave.onrender.com/post", {
       method: "PUT",
       body: data,
-      credentials: "include",
+      // credentials: "include",
     });
 
     if (res.ok) {

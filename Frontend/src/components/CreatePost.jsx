@@ -18,10 +18,10 @@ export default function CreatePost() {
     data.set("content", content);
     data.set("file", files[0]);
 
-    const res = await fetch("http://localhost:8080/post", {
+    const res = await fetch("https://wirtewave.onrender.com/post", {
       method: "POST",
       body: data,
-      credentials: "include",
+      // credentials: "include",
     });
     if (res.ok) {
       setRedirect(true);

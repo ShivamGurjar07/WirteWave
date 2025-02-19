@@ -6,8 +6,8 @@ const Header = () => {
   const { setUserInfo, userInfo } = useContext(UserContext);
 
   useEffect(() => {
-    fetch("http://localhost:8080/profile", {
-      credentials: "include",
+    fetch("https://wirtewave.onrender.com/profile", {
+      // credentials: "include",
     })
       .then((res) => res.json())
       .then((userInfo) => {
@@ -19,8 +19,8 @@ const Header = () => {
   }, []);
 
   function logout() {
-    fetch("http://localhost:8080/logout", {
-      credentials: "include",
+    fetch("https://wirtewave.onrender.com/logout", {
+      // credentials: "include",
       method: "POST",
     })
       .then(() => {

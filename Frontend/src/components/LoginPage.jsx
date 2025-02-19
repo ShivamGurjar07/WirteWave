@@ -9,11 +9,11 @@ export default function LoginPage() {
   const{setUserInfo} = useContext(UserContext);
   async function login(ev){
     ev.preventDefault();
-    const res = await fetch("http://localhost:8080/login",{
+    const res = await fetch("https://wirtewave.onrender.com/login",{
       method:"POST",
       body:JSON.stringify({username, password}),
       headers:{"Content-Type":"application/json"},
-      credentials:"include",
+      // credentials:"include",
     })
     if (res.ok){
       res.json().then(userInfo=>{

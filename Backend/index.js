@@ -13,14 +13,13 @@ const salt = bcrypt.genSaltSync(10);
 const secret = "sadsdncdndvndkl579";
 const fs = require("fs");
 const path = require("path");
-require('dotenv').config();
-const PORT = process.env.PORT; 
+require("dotenv").config();
+const PORT = process.env.PORT;
 //{ credentials: true, origin: "http://localhost:5173" }
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
-
 
 async function connectDB() {
   try {
@@ -30,7 +29,6 @@ async function connectDB() {
     console.log("error", error);
   }
 }
-
 
 // User Registration
 app.post("/register", async (req, res) => {
@@ -206,8 +204,7 @@ app.get("/post/:id", async (req, res) => {
   res.json(postDoc);
 });
 
-app.listen(PORT, async() => {
-   await connectDB()
+app.listen(PORT, async () => {
+  await connectDB();
   console.log("Server running on http://localhost:8080");
-  
 });

@@ -4,7 +4,7 @@ import Post from "./components/Post";
 export default function IndexPages() {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:8080/post").then((res) => {
+    fetch("https://wirtewave.onrender.com/post").then((res) => {
       res.json().then((posts) => {
         setPosts(posts);
       });
