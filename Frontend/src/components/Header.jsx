@@ -43,7 +43,7 @@ const Header = () => {
               <div><button className="logout"onClick={logout}>Logout</button></div>
             </div>
           ):(
-            <div>
+            <div className="header">
               <Link to="/register">Register</Link>
               <Link to="/login">Login</Link>
             </div>

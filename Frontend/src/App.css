@@ -1,4 +1,4 @@
-*{
+/* *{
   box-sizing: border-box;
   font-style: inter;
 }
@@ -16,7 +16,6 @@ img{
   max-width: 100%;
 }
 main{
-  /* margin: 10px; */
   padding: 25px;
   min-height: 100vh;
   width: 100%;
@@ -26,12 +25,9 @@ main{
 }
 .logout{
   border: none;
-
-  /* background-color:; */
   cursor: "pointer"
 }
 .mainPage{
-  /* width: 100%; */
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px 20px;
@@ -68,7 +64,6 @@ header nav{
 }
 div.post{
   display: grid;
-  /* grid-template-columns: .9fr 1.1fr; */
   gap: 20px;
   margin-bottom: 30px;
 }
@@ -184,4 +179,239 @@ div.post-page a.edit-btn{
 }
 a svg{
   height: 20px;
+} */
+
+
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: #222;
+  line-height: 1.6;
+}
+
+.post img {
+  max-width: 100%;
+  height: 250px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  padding: 15px;
+  flex-wrap: wrap;
+}
+
+main {
+  padding: 20px;
+  min-height: 100vh;
+  width: 90%;
+  margin: 10px auto;
+  background-color: #83c7ee;
+  border-radius: 10px;
+}
+
+.logout {
+  border: none;
+  cursor: pointer;
+  background-color: #4C74F8;
+
+}
+
+.mainPage {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.post {
+  padding: 15px;
+  height: 500px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  /* display: flex;
+  flex-direction: column; */
+  overflow: hidden;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+header a {
+  text-decoration: none;
+  color: inherit;
+}
+
+header a.logo {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+header nav {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+div.post {
+  /* display: grid;
+  gap: 20px; */
+  margin-bottom: 30px;
+}
+
+@media screen and (min-width: 700px) {
+  div.post {
+    grid-template-columns: 0.9fr 1.1fr;
+  }
+}
+
+div.post div.texts h2 {
+  font-size: 1.8rem;
+  margin: 0;
+  text-decoration: none;
+}
+div.post div.texts a{
+  text-decoration: none;
+  color: inherit;
+ }
+div.post p.info {
+  display: flex;
+  gap: 10px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #333;
+}
+
+div.post p.summary {
+  margin: 10px 0;
+  line-height: 1.4rem;
+}
+
+form.login,
+form.register {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  margin-bottom: 15px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background-color: #4c74f8;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+button:hover {
+  background-color: #6e93f7;
+}
+
+div.post-page {
+  padding: 10px;
+}
+
+div.post-page div.image {
+  max-height: 500px;
+  display: flex;
+  justify-content: center;
+}
+
+div.post-page div.image img {
+  object-fit: cover;
+  width: 100%;
+}
+
+div.post-page h1 {
+  text-align: center;
+  margin: 10px 0 5px;
+}
+
+div.post-page time {
+  text-align: center;
+  display: block;
+  font-size: 0.8rem;
+  color: #8a4646;
+}
+
+div.post-page div.author {
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+div.post-page div.content {
+  line-height: 1.5rem;
+}
+
+div.post-page div.edit-row {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+div.post-page a.edit-btn {
+  background-color: #faf8f8;
+  color: #030303;
+  padding: 10px 15px;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+}
+
+a svg {
+  height: 20px;
+}
+
+@media screen and (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .mainPage {
+    grid-template-columns: 1fr;
+  }
+  
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  header nav {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  div.post {
+    grid-template-columns: 1fr;
+  }
 }
