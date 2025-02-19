@@ -21,9 +21,16 @@ app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
-mongoose.connect(
-  process.env.url
-);
+
+async function connectDB() {
+  try {
+    await mongoose.connect(process.env.url);
+    console.log("mongodb is connected");
+  } catch (error) {
+    console.log("error", error);
+  }
+}
+
 
 // User Registration
 app.post("/register", async (req, res) => {
@@ -199,6 +206,8 @@ app.get("/post/:id", async (req, res) => {
   res.json(postDoc);
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, async() => {
+   await connectDB()
   console.log("Server running on http://localhost:8080");
+  
 });
