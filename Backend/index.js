@@ -15,8 +15,8 @@ const fs = require("fs");
 const path = require("path");
 require('dotenv').config();
 const PORT = process.env.PORT; 
-
-app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
+//{ credentials: true, origin: "http://localhost:5173" }
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
