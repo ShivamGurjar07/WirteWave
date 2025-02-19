@@ -14,6 +14,7 @@ const secret = "sadsdncdndvndkl579";
 const fs = require("fs");
 const path = require("path");
 require('dotenv').config();
+const PORT = process.env.PORT; 
 
 app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
 app.use(express.json());
@@ -198,6 +199,6 @@ app.get("/post/:id", async (req, res) => {
   res.json(postDoc);
 });
 
-app.listen(8080, () => {
+app.listen(PORT, () => {
   console.log("Server running on http://localhost:8080");
 });
