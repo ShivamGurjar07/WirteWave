@@ -233,7 +233,7 @@ async function connectDB() {
   }
 }
 
-// 🟢 User Registration
+//  User Registration
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -247,7 +247,7 @@ app.post("/register", async (req, res) => {
   }
 });
 
-// 🟢 User Login
+//  User Login
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
@@ -276,7 +276,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// 🟢 Get Profile
+//  Get Profile
 app.get("/profile", (req, res) => {
   const token = req.cookies?.token;
 
@@ -288,12 +288,12 @@ app.get("/profile", (req, res) => {
   });
 });
 
-// 🔴 Logout
+//  Logout
 app.post("/logout", (req, res) => {
   res.cookie("token", "", { httpOnly: true }).json({ message: "Logged out" });
 });
 
-// 🟢 Create a Post
+//  Create a Post
 const uploadMiddleWare = multer({ dest: "uploads/" });
 
 app.post("/post", uploadMiddleWare.single("file"), async (req, res) => {
@@ -324,7 +324,7 @@ app.post("/post", uploadMiddleWare.single("file"), async (req, res) => {
   }
 });
 
-// 🟢 Get all Posts
+//  Get all Posts
 app.get("/post", async (req, res) => {
   try {
     const posts = await Post.find()
@@ -337,14 +337,14 @@ app.get("/post", async (req, res) => {
   }
 });
 
-// 🟢 Get single Post by ID
+//  Get single Post by ID
 app.get("/post/:id", async (req, res) => {
   const { id } = req.params;
   const postDoc = await Post.findById(id).populate("author", ["username"]);
   res.json(postDoc);
 });
 
-// 🔄 Update a Post
+//  Update a Post
 app.put("/post", uploadMiddleWare.single("file"), async (req, res) => {
   let newPath = null;
   if (req.file) {
@@ -384,7 +384,7 @@ app.put("/post", uploadMiddleWare.single("file"), async (req, res) => {
   });
 });
 
-// 🟢 Add Comment (Only logged-in users)
+//  Add Comment (Only logged-in users)
 app.post("/comment", async (req, res) => {
   const token = req.cookies?.token;
   if (!token) return res.status(401).json({ error: "Not authenticated" });
@@ -407,7 +407,7 @@ app.post("/comment", async (req, res) => {
   });
 });
 
-// 🟢 Get Comments for a Post
+//  Get Comments for a Post
 app.get("/comment/:postId", async (req, res) => {
   const { postId } = req.params;
   try {
@@ -418,7 +418,7 @@ app.get("/comment/:postId", async (req, res) => {
   }
 });
 
-// 🔴 Delete Comment (Only author)
+//  Delete Comment (Only author)
 app.delete("/comment/:commentId", async (req, res) => {
   const token = req.cookies?.token;
   if (!token) return res.status(401).json({ error: "Not authenticated" });
